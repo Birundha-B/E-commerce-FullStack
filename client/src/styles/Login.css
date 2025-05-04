@@ -1,0 +1,55 @@
+body {
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Ensure it covers the full viewport height */
+    margin: 0; /* Remove default margin */
+    font-family: Arial, sans-serif;
+  }
+  
+  .login-container {
+    max-width: 400px;
+    margin: 60px auto;
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency to see background */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #bd497b;
+  }
+  
+  .login-image {
+    width: 100%;
+    max-width: 350px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+  }
+  
