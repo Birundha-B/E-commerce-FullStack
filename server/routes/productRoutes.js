@@ -25,14 +25,15 @@ router.get('/', async (req, res) => {
   res.json(products);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { name, description, category, price, image } = req.body;
-    const newProduct = new Product({ name, description, category, price, image });
+    const { name, description, category, price, image, stock } = req.body;
+    const newProduct = new Product({ name, description, category, price, image, stock });
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 module.exports = router;

@@ -4,7 +4,7 @@ import React from 'react';
 import "../styles/AddProduct.css";
 
 function AddProduct() {
-  const [product, setProduct] = useState({ name: '', description: '', category: '', price: '', image: '' });
+  const [product, setProduct] = useState({ name: '', description: '', category: '', price: '', image: '', stock: '' });
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -13,7 +13,12 @@ function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/products', product);
+      const token = localStorage.getItem('token');
+      await axios.post('http://localhost:5000/api/products', product, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       alert('Product added');
     } catch (err) {
       alert('Failed to add');
@@ -27,6 +32,7 @@ function AddProduct() {
       <input name="category" placeholder="Category" onChange={handleChange} />
       <input name="price" placeholder="Price" type="number" onChange={handleChange} />
       <input name="image" placeholder="Image URL" onChange={handleChange} />
+      <input name="stock" placeholder="Stock" type="number" onChange={handleChange} required />
       <button type="submit">Add Product</button>
     </form>
   );

@@ -19,12 +19,13 @@ function Login() {
 
       const data = await res.json();
 
-      if (res.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('role', data.role);
-        localStorage.setItem('email', data.email);
-        alert('Login successful!');
-        navigate('/');
+
+if (res.ok) {
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('role', data.role); // Ensure this line exists
+  localStorage.setItem('email', data.email);
+  alert('Login successful!');
+  navigate('/');
       } else {
         alert(data.message || 'Login failed');
       }

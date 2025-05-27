@@ -6,7 +6,8 @@ import Signup from './components/Signup';
 import ProductList from './components/ProductList';
 import AddProduct from './components/AddProduct';
 import ProtectedRoute from './components/ProtectedRoute';
-import './app.css';
+
+
 
 function App() {
   return (

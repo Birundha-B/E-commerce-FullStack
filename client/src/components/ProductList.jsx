@@ -4,8 +4,9 @@ import "../styles/Home.css";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const role = localStorage.getItem('role');
-  const username = localStorage.getItem('username');
+  const email = localStorage.getItem('email');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,11 +22,16 @@ function ProductList() {
 
   const handleBuy = async (product) => {
     try {
+      const token = localStorage.getItem('token');
       await axios.post('http://localhost:5000/api/orders', {
-        user: username,
+        user: email,
         productId: product._id,
         productName: product.name,
         price: product.price
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       alert(`Order placed for ${product.name}`);
     } catch (err) {
@@ -33,13 +39,26 @@ function ProductList() {
     }
   };
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="product-list-container">
-    <h1>Easy Buy Store</h1>
-      <h2>Available Products</h2>
+      <div className="banner">
+        <h1>Easy Buy Store</h1>
+        <p>Explore and order from a wide range of quality products</p>
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+      </div>
 
       <div className="product-grid">
-        {products.map((p) => (
+        {filteredProducts.map((p) => (
           <div key={p._id} className="product-card">
             <h3>{p.name}</h3>
             <img
@@ -52,11 +71,14 @@ function ProductList() {
             />
             <p className="product-desc">{p.description}</p>
             <p className="product-price">₹{p.price}</p>
-            {role === 'user' && (
+            <p className="product-stock">Stock: {p.stock}</p>
+
+            {role === 'user' && p.stock > 0 && (
               <button className="buy-button" onClick={() => handleBuy(p)}>
                 Buy
               </button>
             )}
+            {p.stock === 0 && <p className="out-of-stock">Out of Stock</p>}
           </div>
         ))}
       </div>
